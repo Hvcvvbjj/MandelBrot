@@ -1,0 +1,27 @@
+declare const canvas: HTMLCanvasElement;
+declare const ctx: CanvasRenderingContext2D;
+declare const iterationsInput: HTMLInputElement;
+declare const colorSchemeSelect: HTMLSelectElement;
+declare const invertColorsCheckbox: HTMLInputElement;
+declare const startAnimationButton: HTMLButtonElement;
+declare const stopAnimationButton: HTMLButtonElement;
+declare const resetButton: HTMLButtonElement;
+declare const toggleJuliaButton: HTMLButtonElement;
+declare let maxIterations: number;
+declare let zoom: number;
+declare let offsetX: number;
+declare let offsetY: number;
+declare let colorScheme: string;
+declare let invertColors: boolean;
+declare let animationId: number;
+declare let isAnimating: boolean;
+declare let juliaMode: boolean;
+declare let juliaC: {
+    x: number;
+    y: number;
+};
+declare const worker: Worker;
+declare function drawMandelbrotWithWorker(): void;
+declare function animate(): void;
+declare function startAnimation(): void;
+declare function stopAnimation(): void;
