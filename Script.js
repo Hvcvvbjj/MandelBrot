@@ -19,8 +19,43 @@ let isAnimating = false;
 let juliaMode = false;
 let juliaC = { x: -0.7, y: 0.27015 };
 
+// Variables for panning the view
+let isDragging = false;
+let dragStartX = 0;
+let dragStartY = 0;
+let startOffsetX = 0;
+let startOffsetY = 0;
+
 // Initialize Web Worker only once
 let worker = new Worker("mandelbrotWorker.js");
+
+// Mouse-based panning controls
+canvas.addEventListener("mousedown", (e) => {
+    isDragging = true;
+    dragStartX = e.clientX;
+    dragStartY = e.clientY;
+    startOffsetX = offsetX;
+    startOffsetY = offsetY;
+});
+
+canvas.addEventListener("mousemove", (e) => {
+    if (isDragging) {
+        const deltaX = e.clientX - dragStartX;
+        const deltaY = e.clientY - dragStartY;
+        offsetX = startOffsetX - (deltaX * 4) / (zoom * canvas.width);
+        offsetY = startOffsetY - (deltaY * 4) / (zoom * canvas.height);
+        drawMandelbrotWithWorker();
+    }
+});
+
+function endDrag() {
+    if (isDragging) {
+        isDragging = false;
+    }
+}
+
+canvas.addEventListener("mouseup", endDrag);
+canvas.addEventListener("mouseleave", endDrag);
 
 function drawMandelbrotWithWorker() {
     if (!canvas || !ctx) {
