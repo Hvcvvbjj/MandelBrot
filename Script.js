@@ -32,8 +32,17 @@ let dragStartY = 0;
 let startOffsetX = 0;
 let startOffsetY = 0;
 
-// Initialize Web Worker only once
-let worker = new Worker("mandelbrotWorker.js");
+// Initialize Web Worker only once with error handling
+let worker;
+try {
+    worker = new Worker("mandelbrotWorker.js");
+} catch (err) {
+    console.error("Web Worker initialization failed:", err);
+    const errorDiv = document.getElementById("workerError");
+    if (errorDiv) {
+        errorDiv.classList.remove("d-none");
+    }
+}
 
 // Mouse-based panning controls
 canvas.addEventListener("mousedown", (e) => {
@@ -69,6 +78,11 @@ function drawMandelbrotWithWorker() {
         return;
     }
 
+    if (!worker) {
+        console.error("Web Worker is not available.");
+        return;
+    }
+
     worker.postMessage({
         width: canvas.width,
         height: canvas.height,
@@ -83,17 +97,19 @@ function drawMandelbrotWithWorker() {
     });
 }
 
-// Set up worker response handling
-worker.addEventListener("message", (e) => {
-    const { imageData } = e.data;
-    const ctxImageData = new ImageData(new Uint8ClampedArray(imageData), canvas.width, canvas.height);
-    ctx.putImageData(ctxImageData, 0, 0);
-});
+// Set up worker response handling if worker initialized successfully
+if (worker) {
+    worker.addEventListener("message", (e) => {
+        const { imageData } = e.data;
+        const ctxImageData = new ImageData(new Uint8ClampedArray(imageData), canvas.width, canvas.height);
+        ctx.putImageData(ctxImageData, 0, 0);
+    });
 
-// Handle worker errors
-worker.addEventListener("error", (err) => {
-    console.error("Web Worker error:", err);
-});
+    // Handle worker errors
+    worker.addEventListener("error", (err) => {
+        console.error("Web Worker error:", err);
+    });
+}
 
 // Animation function
 function animate() {
