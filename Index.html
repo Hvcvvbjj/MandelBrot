@@ -4,18 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mandelbrot Set Visualizer</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="Style.css">
 </head>
 <body>
     <div class="container">
-        <h1 class="text-center my-4">Mandelbrot Set Visualizer</h1>
-        <div class="row">
-            <div class="col-md-8">
+        <h1 class="title">Mandelbrot Set Visualizer</h1>
+        <div class="layout">
+            <div class="canvas-container">
                 <canvas id="mandelbrotCanvas" width="800" height="600"></canvas>
             </div>
-            <div class="col-md-4">
-                <div class="controls card p-3">
+            <div class="sidebar">
+                <div class="controls">
                     <h3>Controls</h3>
                     <div class="form-group">
                         <label for="iterations">Iterations:</label>
@@ -47,6 +46,6 @@
             </div>
         </div>
     </div>
-    <script src="script.js"></script>
+    <script src="Script.js"></script>
 </body>
 </html>
