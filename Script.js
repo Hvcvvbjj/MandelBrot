@@ -168,6 +168,14 @@ resetButton.addEventListener("click", () => {
 startAnimationButton.addEventListener("click", startAnimation);
 stopAnimationButton.addEventListener("click", stopAnimation);
 
+// Zoom in or out with the mouse wheel
+canvas.addEventListener("wheel", (e) => {
+    e.preventDefault();
+    const factor = e.deltaY < 0 ? 1.1 : 0.9;
+    zoom *= factor;
+    drawMandelbrotWithWorker();
+});
+
 // Initial draw
 drawMandelbrotWithWorker();
 
