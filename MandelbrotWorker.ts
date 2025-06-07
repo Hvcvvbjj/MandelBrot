@@ -1,24 +1,40 @@
-self.addEventListener("message", (e) => {
-    const { width, height, zoom, offsetX, offsetY, maxIterations, juliaMode, juliaC, colorScheme, invertColors } = e.data;
+self.addEventListener("message", (e: MessageEvent) => {
+    const { width, height, zoom, offsetX, offsetY, maxIterations, juliaMode, juliaC, colorScheme, invertColors } = e.data as {
+        width: number;
+        height: number;
+        zoom: number;
+        offsetX: number;
+        offsetY: number;
+        maxIterations: number;
+        juliaMode: boolean;
+        juliaC: { x: number; y: number };
+        colorScheme: string;
+        invertColors: boolean;
+    };
     const imageData = new Uint8ClampedArray(width * height * 4);
+
     for (let px = 0; px < width; px++) {
         for (let py = 0; py < height; py++) {
             let x0 = (px / width - 0.5) * 4 / zoom + offsetX;
             let y0 = (py / height - 0.5) * 4 / zoom + offsetY;
+
             let x = x0;
             let y = y0;
             let iteration = 0;
+
             if (juliaMode) {
                 // Use Julia constant
                 x0 = juliaC.x;
                 y0 = juliaC.y;
             }
+
             while (x * x + y * y <= 4 && iteration < maxIterations) {
                 const tempX = x * x - y * y + x0;
                 y = 2 * x * y + y0;
                 x = tempX;
                 iteration++;
             }
+
             const pixelIndex = (px + py * width) * 4;
             const ratio = iteration / maxIterations;
             const color = getColor(ratio, iteration, maxIterations, colorScheme, invertColors);
@@ -28,19 +44,26 @@ self.addEventListener("message", (e) => {
             imageData[pixelIndex + 3] = 255; // Alpha channel
         }
     }
+
     self.postMessage({ imageData });
 });
-function getColor(ratio, iteration, maxIterations, colorScheme, invertColors) {
-    let r;
-    let g;
-    let b;
+
+function getColor(
+    ratio: number,
+    iteration: number,
+    maxIterations: number,
+    colorScheme: string,
+    invertColors: boolean
+): [number, number, number] {
+    let r: number;
+    let g: number;
+    let b: number;
     if (iteration === maxIterations) {
         // Point is in the Mandelbrot or Julia set
         r = 0;
         g = 0;
         b = 0;
-    }
-    else {
+    } else {
         // Apply different color schemes
         switch (colorScheme) {
             case 'rainbow':
@@ -72,11 +95,13 @@ function getColor(ratio, iteration, maxIterations, colorScheme, invertColors) {
                 break;
         }
     }
+
     // Invert colors if the option is enabled
     if (invertColors) {
         r = 255 - r;
         g = 255 - g;
         b = 255 - b;
     }
+
     return [r, g, b];
 }
