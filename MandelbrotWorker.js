@@ -1,3 +1,6 @@
+/*
+ * Licensed under the MIT License.
+ */
 self.addEventListener("message", (e) => {
     const { width, height, zoom, offsetX, offsetY, maxIterations, juliaMode, juliaC, colorScheme, invertColors } = e.data;
     const imageData = new Uint8ClampedArray(width * height * 4);
