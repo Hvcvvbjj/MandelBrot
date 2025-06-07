@@ -1,11 +1,12 @@
-self.addEventListener("message", (e) => {
-    const { width, height, zoom, offsetX, offsetY, maxIterations, juliaMode, juliaC, colorScheme, invertColors } = e.data;
-    const imageData = new Uint8ClampedArray(width * height * 4);
+if (typeof self !== "undefined" && self.addEventListener) {
+    self.addEventListener("message", (e) => {
+        const { width, height, zoom, offsetX, offsetY, maxIterations, juliaMode, juliaC, colorScheme, invertColors } = e.data;
+        const imageData = new Uint8ClampedArray(width * height * 4);
 
-    for (let px = 0; px < width; px++) {
-        for (let py = 0; py < height; py++) {
-            let x0 = (px / width - 0.5) * 4 / zoom + offsetX;
-            let y0 = (py / height - 0.5) * 4 / zoom + offsetY;
+        for (let px = 0; px < width; px++) {
+            for (let py = 0; py < height; py++) {
+                let x0 = (px / width - 0.5) * 4 / zoom + offsetX;
+                let y0 = (py / height - 0.5) * 4 / zoom + offsetY;
 
             let x = x0;
             let y = y0;
@@ -24,18 +25,19 @@ self.addEventListener("message", (e) => {
                 iteration++;
             }
 
-            const pixelIndex = (px + py * width) * 4;
-            const ratio = iteration / maxIterations;
-            const color = getColor(ratio, iteration, maxIterations, colorScheme, invertColors);
-            imageData[pixelIndex] = color[0];
-            imageData[pixelIndex + 1] = color[1];
-            imageData[pixelIndex + 2] = color[2];
-            imageData[pixelIndex + 3] = 255; // Alpha channel
+                const pixelIndex = (px + py * width) * 4;
+                const ratio = iteration / maxIterations;
+                const color = getColor(ratio, iteration, maxIterations, colorScheme, invertColors);
+                imageData[pixelIndex] = color[0];
+                imageData[pixelIndex + 1] = color[1];
+                imageData[pixelIndex + 2] = color[2];
+                imageData[pixelIndex + 3] = 255; // Alpha channel
+            }
         }
-    }
 
-    self.postMessage({ imageData });
-});
+        self.postMessage({ imageData });
+    });
+}
 
 function getColor(ratio, iteration, maxIterations, colorScheme, invertColors) {
     let r, g, b;
@@ -85,4 +87,8 @@ function getColor(ratio, iteration, maxIterations, colorScheme, invertColors) {
     }
 
     return [r, g, b];
+}
+
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = { getColor };
 }
