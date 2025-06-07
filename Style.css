@@ -16,6 +16,7 @@ body {
     height: auto;
     display: block;
     margin: 0 auto;
+    image-rendering: pixelated;
 }
 
 .controls {

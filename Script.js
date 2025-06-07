@@ -117,14 +117,21 @@ stopAnimationButton.addEventListener("click", stopAnimation);
 // Initial draw
 drawMandelbrotWithWorker();
 
-// Handle canvas resizing
-window.addEventListener("resize", () => {
-    const { clientWidth, clientHeight } = canvas;
-    canvas.width = clientWidth;
-    canvas.height = clientHeight;
+function resizeCanvas() {
+    const rect = canvas.getBoundingClientRect();
+    const dpr = window.devicePixelRatio || 1;
+
+    canvas.width = rect.width * dpr;
+    canvas.height = rect.height * dpr;
+
+    canvas.style.width = `${rect.width}px`;
+    canvas.style.height = `${rect.height}px`;
+
     drawMandelbrotWithWorker();
-});
+}
+
+// Handle canvas resizing
+window.addEventListener("resize", resizeCanvas);
 
 // Set the initial canvas size based on the current client size
-canvas.width = canvas.clientWidth;
-canvas.height = canvas.clientHeight;
+resizeCanvas();
