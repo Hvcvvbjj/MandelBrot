@@ -39,7 +39,14 @@
                         <button class="btn btn-primary btn-block" id="startAnimation">Start Animation</button>
                         <button class="btn btn-secondary btn-block" id="stopAnimation">Stop Animation</button>
                         <button class="btn btn-danger btn-block" id="reset">Reset</button>
-                        <button class="btn btn-info btn-block" id="toggleJuliaButton">Toggle Julia Mode</button>
+                        <div class="form-group mt-2">
+                            <label for="fractalType">Fractal Type:</label>
+                            <select class="form-control" id="fractalType">
+                                <option value="mandelbrot">Mandelbrot</option>
+                                <option value="julia">Julia</option>
+                                <option value="burningShip">Burning Ship</option>
+                            </select>
+                        </div>
                         <button class="btn btn-warning btn-block" id="fullScreenButton">Toggle Full-Screen</button>
                         <button class="btn btn-dark btn-block" id="darkModeButton">Toggle Dark/Light Mode</button>
                     </div>

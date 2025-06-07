@@ -1,5 +1,5 @@
 self.addEventListener("message", (e) => {
-    const { width, height, zoom, offsetX, offsetY, maxIterations, juliaMode, juliaC, colorScheme, invertColors } = e.data;
+    const { width, height, zoom, offsetX, offsetY, maxIterations, fractalType, juliaC, colorScheme, invertColors } = e.data;
     const imageData = new Uint8ClampedArray(width * height * 4);
 
     for (let px = 0; px < width; px++) {
@@ -11,16 +11,26 @@ self.addEventListener("message", (e) => {
             let y = y0;
             let iteration = 0;
 
-            if (juliaMode) {
+            if (fractalType === 'julia') {
                 // Use Julia constant
                 x0 = juliaC.x;
                 y0 = juliaC.y;
             }
 
             while (x * x + y * y <= 4 && iteration < maxIterations) {
-                const tempX = x * x - y * y + x0;
-                y = 2 * x * y + y0;
-                x = tempX;
+                let tempX;
+                switch (fractalType) {
+                    case 'burningShip':
+                        tempX = x * x - y * y + x0;
+                        y = 2 * Math.abs(x * y) + y0;
+                        x = Math.abs(tempX);
+                        break;
+                    default:
+                        tempX = x * x - y * y + x0;
+                        y = 2 * x * y + y0;
+                        x = tempX;
+                        break;
+                }
                 iteration++;
             }
 
