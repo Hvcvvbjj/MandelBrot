@@ -7,6 +7,8 @@ const startAnimationButton = document.getElementById("startAnimation");
 const stopAnimationButton = document.getElementById("stopAnimation");
 const resetButton = document.getElementById("reset");
 const toggleJuliaButton = document.getElementById("toggleJuliaButton");
+const juliaCXInput = document.getElementById("juliaCX");
+const juliaCYInput = document.getElementById("juliaCY");
 
 let maxIterations = parseInt(iterationsInput.value);
 let zoom = 1;
@@ -17,7 +19,10 @@ let invertColors = false;
 let animationId;
 let isAnimating = false;
 let juliaMode = false;
-let juliaC = { x: -0.7, y: 0.27015 };
+let juliaC = {
+    x: parseFloat(juliaCXInput.value),
+    y: parseFloat(juliaCYInput.value)
+};
 
 // Initialize Web Worker only once
 let worker = new Worker("mandelbrotWorker.js");
@@ -95,6 +100,16 @@ invertColorsCheckbox.addEventListener("change", () => {
     drawMandelbrotWithWorker();
 });
 
+juliaCXInput.addEventListener("input", () => {
+    juliaC.x = parseFloat(juliaCXInput.value);
+    drawMandelbrotWithWorker();
+});
+
+juliaCYInput.addEventListener("input", () => {
+    juliaC.y = parseFloat(juliaCYInput.value);
+    drawMandelbrotWithWorker();
+});
+
 toggleJuliaButton.addEventListener("click", () => {
     stopAnimation();
     juliaMode = !juliaMode;
@@ -108,6 +123,10 @@ resetButton.addEventListener("click", () => {
     offsetX = -0.5;
     offsetY = 0;
     juliaMode = false;
+    juliaCXInput.value = -0.7;
+    juliaCYInput.value = 0.27015;
+    juliaC.x = parseFloat(juliaCXInput.value);
+    juliaC.y = parseFloat(juliaCYInput.value);
     drawMandelbrotWithWorker();
 });
 
