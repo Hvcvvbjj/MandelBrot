@@ -1,6 +1,7 @@
 const canvas = document.getElementById("mandelbrotCanvas");
 const ctx = canvas.getContext("2d");
 const iterationsInput = document.getElementById("iterations");
+const zoomInput = document.getElementById("zoom");
 const colorSchemeSelect = document.getElementById("colorScheme");
 const invertColorsCheckbox = document.getElementById("invertColors");
 const startAnimationButton = document.getElementById("startAnimation");
@@ -98,6 +99,7 @@ worker.addEventListener("error", (err) => {
 function animate() {
     if (isAnimating) {
         zoom *= 1.02; // Smoothly zoom in
+        zoomInput.value = zoom;
         drawMandelbrotWithWorker();
         animationId = requestAnimationFrame(animate);
     }
@@ -106,6 +108,7 @@ function animate() {
 function startAnimation() {
     if (!isAnimating) {
         isAnimating = true;
+        zoomInput.value = zoom;
         animationId = requestAnimationFrame(animate);
         console.log("Animation started");
     }
@@ -122,6 +125,11 @@ function stopAnimation() {
 // Event listeners
 iterationsInput.addEventListener("input", () => {
     maxIterations = parseInt(iterationsInput.value);
+    drawMandelbrotWithWorker();
+});
+
+zoomInput.addEventListener("input", () => {
+    zoom = parseFloat(zoomInput.value);
     drawMandelbrotWithWorker();
 });
 
@@ -155,6 +163,7 @@ resetButton.addEventListener("click", () => {
     stopAnimation();
     maxIterations = 200;
     zoom = 1;
+    zoomInput.value = zoom;
     offsetX = -0.5;
     offsetY = 0;
     juliaMode = false;
