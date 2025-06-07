@@ -20,7 +20,7 @@ let juliaMode = false;
 let juliaC = { x: -0.7, y: 0.27015 };
 
 // Initialize Web Worker only once
-let worker = new Worker("mandelbrotWorker.js");
+let worker = new Worker("MandelbrotWorker.js");
 
 function drawMandelbrotWithWorker() {
     if (!canvas || !ctx) {
