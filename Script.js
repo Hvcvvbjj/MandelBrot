@@ -78,6 +78,16 @@ function stopAnimation() {
         console.log("Animation stopped");
     }
 }
+function resetFractal() {
+    stopAnimation();
+    maxIterations = 200;
+    zoom = 1;
+    offsetX = -0.5;
+    offsetY = 0;
+    juliaMode = false;
+    drawMandelbrotWithWorker();
+}
+
 
 // Event listeners
 iterationsInput.addEventListener("input", () => {
@@ -101,18 +111,24 @@ toggleJuliaButton.addEventListener("click", () => {
     drawMandelbrotWithWorker();
 });
 
-resetButton.addEventListener("click", () => {
-    stopAnimation();
-    maxIterations = 200;
-    zoom = 1;
-    offsetX = -0.5;
-    offsetY = 0;
-    juliaMode = false;
-    drawMandelbrotWithWorker();
-});
+resetButton.addEventListener("click", resetFractal);
 
 startAnimationButton.addEventListener("click", startAnimation);
 stopAnimationButton.addEventListener("click", stopAnimation);
+document.addEventListener("keydown", (e) => {
+    if (e.code === "Space") {
+        e.preventDefault();
+        if (isAnimating) {
+            stopAnimation();
+        } else {
+            startAnimation();
+        }
+    } else if (e.key === "r" || e.key === "R") {
+        e.preventDefault();
+        resetFractal();
+    }
+});
+
 
 // Initial draw
 drawMandelbrotWithWorker();
