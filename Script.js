@@ -19,12 +19,26 @@ let isAnimating = false;
 let juliaMode = false;
 let juliaC = { x: -0.7, y: 0.27015 };
 
-// Initialize Web Worker only once
-let worker = new Worker("mandelbrotWorker.js");
+// Initialize Web Worker only once with error handling
+let worker;
+try {
+    worker = new Worker("mandelbrotWorker.js");
+} catch (err) {
+    console.error("Web Worker initialization failed:", err);
+    const errorDiv = document.getElementById("workerError");
+    if (errorDiv) {
+        errorDiv.classList.remove("d-none");
+    }
+}
 
 function drawMandelbrotWithWorker() {
     if (!canvas || !ctx) {
         console.log("Canvas or context not found");
+        return;
+    }
+
+    if (!worker) {
+        console.error("Web Worker is not available.");
         return;
     }
 
@@ -42,17 +56,19 @@ function drawMandelbrotWithWorker() {
     });
 }
 
-// Set up worker response handling
-worker.addEventListener("message", (e) => {
-    const { imageData } = e.data;
-    const ctxImageData = new ImageData(new Uint8ClampedArray(imageData), canvas.width, canvas.height);
-    ctx.putImageData(ctxImageData, 0, 0);
-});
+// Set up worker response handling if worker initialized successfully
+if (worker) {
+    worker.addEventListener("message", (e) => {
+        const { imageData } = e.data;
+        const ctxImageData = new ImageData(new Uint8ClampedArray(imageData), canvas.width, canvas.height);
+        ctx.putImageData(ctxImageData, 0, 0);
+    });
 
-// Handle worker errors
-worker.addEventListener("error", (err) => {
-    console.error("Web Worker error:", err);
-});
+    // Handle worker errors
+    worker.addEventListener("error", (err) => {
+        console.error("Web Worker error:", err);
+    });
+}
 
 // Animation function
 function animate() {
