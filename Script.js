@@ -14,7 +14,7 @@ const toggleJuliaButton = document.getElementById("toggleJuliaButton");
 const juliaCXInput = document.getElementById("juliaCX");
 const juliaCYInput = document.getElementById("juliaCY");
 
-let maxIterations = parseInt(iterationsInput.value);
+let maxIterations = parseInt(iterationsInput.value, 10);
 let zoom = 1;
 let offsetX = -0.5;
 let offsetY = 0;
@@ -143,7 +143,7 @@ function stopAnimation() {
 
 // Event listeners
 iterationsInput.addEventListener("input", () => {
-    maxIterations = parseInt(iterationsInput.value);
+    maxIterations = parseInt(iterationsInput.value, 10);
     drawMandelbrotWithWorker();
 });
 
