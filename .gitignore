@@ -1,0 +1,7 @@
+# Ignore macOS and Windows OS-generated files
+.DS_Store
+Thumbs.db
+
+# Ignore build artifacts
+/dist/
+
