@@ -6,7 +6,7 @@ const invertColorsCheckbox = document.getElementById("invertColors");
 const startAnimationButton = document.getElementById("startAnimation");
 const stopAnimationButton = document.getElementById("stopAnimation");
 const resetButton = document.getElementById("reset");
-const toggleJuliaButton = document.getElementById("toggleJuliaButton");
+const fractalTypeSelect = document.getElementById("fractalType");
 
 let maxIterations = parseInt(iterationsInput.value);
 let zoom = 1;
@@ -16,7 +16,7 @@ let colorScheme = colorSchemeSelect.value;
 let invertColors = false;
 let animationId;
 let isAnimating = false;
-let juliaMode = false;
+let fractalType = fractalTypeSelect.value;
 let juliaC = { x: -0.7, y: 0.27015 };
 
 // Initialize Web Worker only once
@@ -35,7 +35,7 @@ function drawMandelbrotWithWorker() {
         offsetX: offsetX,
         offsetY: offsetY,
         maxIterations: maxIterations,
-        juliaMode: juliaMode,
+        fractalType: fractalType,
         juliaC: juliaC,
         colorScheme: colorScheme,
         invertColors: invertColors
@@ -95,9 +95,9 @@ invertColorsCheckbox.addEventListener("change", () => {
     drawMandelbrotWithWorker();
 });
 
-toggleJuliaButton.addEventListener("click", () => {
+fractalTypeSelect.addEventListener("change", () => {
+    fractalType = fractalTypeSelect.value;
     stopAnimation();
-    juliaMode = !juliaMode;
     drawMandelbrotWithWorker();
 });
 
@@ -107,7 +107,8 @@ resetButton.addEventListener("click", () => {
     zoom = 1;
     offsetX = -0.5;
     offsetY = 0;
-    juliaMode = false;
+    fractalType = 'mandelbrot';
+    fractalTypeSelect.value = 'mandelbrot';
     drawMandelbrotWithWorker();
 });
 
