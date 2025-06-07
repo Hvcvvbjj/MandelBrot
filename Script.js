@@ -1,3 +1,6 @@
+/*
+ * Licensed under the MIT License.
+ */
 const canvas = document.getElementById("mandelbrotCanvas");
 const ctx = canvas.getContext("2d");
 const iterationsInput = document.getElementById("iterations");
