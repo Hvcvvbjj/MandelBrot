@@ -82,6 +82,7 @@ function stopAnimation() {
 // Event listeners
 iterationsInput.addEventListener("input", () => {
     maxIterations = parseInt(iterationsInput.value);
+    iterationsInput.setAttribute("aria-valuenow", iterationsInput.value);
     drawMandelbrotWithWorker();
 });
 
@@ -92,12 +93,14 @@ colorSchemeSelect.addEventListener("change", () => {
 
 invertColorsCheckbox.addEventListener("change", () => {
     invertColors = invertColorsCheckbox.checked;
+    invertColorsCheckbox.setAttribute("aria-checked", invertColorsCheckbox.checked);
     drawMandelbrotWithWorker();
 });
 
 toggleJuliaButton.addEventListener("click", () => {
     stopAnimation();
     juliaMode = !juliaMode;
+    toggleJuliaButton.setAttribute("aria-pressed", juliaMode);
     drawMandelbrotWithWorker();
 });
 
