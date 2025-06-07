@@ -1,0 +1,17 @@
+{
+  "name": "mandelbrot",
+  "version": "1.0.0",
+  "description": "Mandelbrot Set Visualizer",
+  "scripts": {
+    "start": "parcel Index.html",
+    "build": "parcel build Index.html --dist-dir dist",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "parcel": "^2.15.2"
+  }
+}
