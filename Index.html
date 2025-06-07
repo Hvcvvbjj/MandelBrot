@@ -19,11 +19,11 @@
                     <h3>Controls</h3>
                     <div class="form-group">
                         <label for="iterations">Iterations:</label>
-                        <input type="range" class="custom-range" id="iterations" min="1" max="1000" value="200">
+                        <input type="range" class="custom-range" id="iterations" min="1" max="1000" value="200" role="slider" aria-label="Iterations" aria-valuemin="1" aria-valuemax="1000" aria-valuenow="200">
                     </div>
                     <div class="form-group">
                         <label for="colorScheme">Color Scheme:</label>
-                        <select class="form-control" id="colorScheme">
+                        <select class="form-control" id="colorScheme" role="listbox" aria-label="Color Scheme">
                             <option value="monochrome">Monochrome</option>
                             <option value="rainbow">Rainbow</option>
                             <option value="cool">Cool</option>
@@ -31,17 +31,17 @@
                             <option value="ocean">Ocean</option>
                         </select>
                         <div class="form-check mt-2">
-                            <input class="form-check-input" type="checkbox" id="invertColors">
+                            <input class="form-check-input" type="checkbox" id="invertColors" role="checkbox" aria-label="Invert Colors">
                             <label class="form-check-label" for="invertColors">Invert Colors</label>
                         </div>
                     </div>
                     <div class="button-group mt-3">
-                        <button class="btn btn-primary btn-block" id="startAnimation">Start Animation</button>
-                        <button class="btn btn-secondary btn-block" id="stopAnimation">Stop Animation</button>
-                        <button class="btn btn-danger btn-block" id="reset">Reset</button>
-                        <button class="btn btn-info btn-block" id="toggleJuliaButton">Toggle Julia Mode</button>
-                        <button class="btn btn-warning btn-block" id="fullScreenButton">Toggle Full-Screen</button>
-                        <button class="btn btn-dark btn-block" id="darkModeButton">Toggle Dark/Light Mode</button>
+                        <button class="btn btn-primary btn-block" id="startAnimation" role="button" aria-label="Start Animation">Start Animation</button>
+                        <button class="btn btn-secondary btn-block" id="stopAnimation" role="button" aria-label="Stop Animation">Stop Animation</button>
+                        <button class="btn btn-danger btn-block" id="reset" role="button" aria-label="Reset Visualization">Reset</button>
+                        <button class="btn btn-info btn-block" id="toggleJuliaButton" role="button" aria-label="Toggle Julia Mode">Toggle Julia Mode</button>
+                        <button class="btn btn-warning btn-block" id="fullScreenButton" role="button" aria-label="Toggle Full Screen">Toggle Full-Screen</button>
+                        <button class="btn btn-dark btn-block" id="darkModeButton" role="button" aria-label="Toggle Dark or Light Mode">Toggle Dark/Light Mode</button>
                     </div>
                 </div>
             </div>
