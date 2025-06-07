@@ -7,6 +7,7 @@ const startAnimationButton = document.getElementById("startAnimation");
 const stopAnimationButton = document.getElementById("stopAnimation");
 const resetButton = document.getElementById("reset");
 const toggleJuliaButton = document.getElementById("toggleJuliaButton");
+const fullScreenButton = document.getElementById("fullScreenButton");
 
 let maxIterations = parseInt(iterationsInput.value);
 let zoom = 1;
@@ -79,6 +80,33 @@ function stopAnimation() {
     }
 }
 
+function toggleFullScreen() {
+    if (!document.fullscreenElement &&
+        !document.webkitFullscreenElement &&
+        !document.mozFullScreenElement &&
+        !document.msFullscreenElement) {
+        if (canvas.requestFullscreen) {
+            canvas.requestFullscreen();
+        } else if (canvas.webkitRequestFullscreen) {
+            canvas.webkitRequestFullscreen();
+        } else if (canvas.mozRequestFullScreen) {
+            canvas.mozRequestFullScreen();
+        } else if (canvas.msRequestFullscreen) {
+            canvas.msRequestFullscreen();
+        }
+    } else {
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        } else if (document.webkitExitFullscreen) {
+            document.webkitExitFullscreen();
+        } else if (document.mozCancelFullScreen) {
+            document.mozCancelFullScreen();
+        } else if (document.msExitFullscreen) {
+            document.msExitFullscreen();
+        }
+    }
+}
+
 // Event listeners
 iterationsInput.addEventListener("input", () => {
     maxIterations = parseInt(iterationsInput.value);
@@ -113,6 +141,7 @@ resetButton.addEventListener("click", () => {
 
 startAnimationButton.addEventListener("click", startAnimation);
 stopAnimationButton.addEventListener("click", stopAnimation);
+fullScreenButton.addEventListener("click", toggleFullScreen);
 
 // Initial draw
 drawMandelbrotWithWorker();
