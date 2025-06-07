@@ -7,6 +7,7 @@ const startAnimationButton = document.getElementById("startAnimation");
 const stopAnimationButton = document.getElementById("stopAnimation");
 const resetButton = document.getElementById("reset");
 const toggleJuliaButton = document.getElementById("toggleJuliaButton");
+const darkModeButton = document.getElementById("darkModeButton");
 
 let maxIterations = parseInt(iterationsInput.value);
 let zoom = 1;
@@ -113,6 +114,19 @@ resetButton.addEventListener("click", () => {
 
 startAnimationButton.addEventListener("click", startAnimation);
 stopAnimationButton.addEventListener("click", stopAnimation);
+
+darkModeButton.addEventListener("click", () => {
+    document.body.classList.toggle("dark-theme");
+    document.body.classList.toggle("light-theme");
+
+    if (document.body.classList.contains("dark-theme")) {
+        darkModeButton.classList.remove("btn-light");
+        darkModeButton.classList.add("btn-dark");
+    } else {
+        darkModeButton.classList.remove("btn-dark");
+        darkModeButton.classList.add("btn-light");
+    }
+});
 
 // Initial draw
 drawMandelbrotWithWorker();
