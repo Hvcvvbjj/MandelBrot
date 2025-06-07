@@ -67,6 +67,9 @@ function getColor(ratio, iteration, maxIterations, colorScheme, invertColors) {
                 g = Math.floor(255 * Math.pow(ratio, 0.3));
                 b = Math.floor(255 * ratio);
                 break;
+            case 'hsv':
+                [r, g, b] = hsvToRgb(ratio, 1, 1).map(v => Math.floor(v * 255));
+                break;
             case 'monochrome':
             default:
                 const shade = Math.floor(255 * ratio);
@@ -84,5 +87,29 @@ function getColor(ratio, iteration, maxIterations, colorScheme, invertColors) {
         b = 255 - b;
     }
 
+    return [r, g, b];
+}
+
+function hsvToRgb(h, s, v) {
+    let r, g, b;
+    const i = Math.floor(h * 6);
+    const f = h * 6 - i;
+    const p = v * (1 - s);
+    const q = v * (1 - f * s);
+    const t = v * (1 - (1 - f) * s);
+    switch (i % 6) {
+        case 0:
+            r = v; g = t; b = p; break;
+        case 1:
+            r = q; g = v; b = p; break;
+        case 2:
+            r = p; g = v; b = t; break;
+        case 3:
+            r = p; g = q; b = v; break;
+        case 4:
+            r = t; g = p; b = v; break;
+        case 5:
+            r = v; g = p; b = q; break;
+    }
     return [r, g, b];
 }
