@@ -38,3 +38,21 @@ body {
 .button-group .btn {
     margin-top: 10px;
 }
+@media (max-width: 768px) {
+    #mandelbrotCanvas {
+        width: 100%;
+        height: auto;
+    }
+    .controls {
+        margin-top: 20px;
+    }
+}
+
+@media (max-width: 576px) {
+    .controls {
+        padding: 1rem;
+    }
+    .button-group .btn {
+        font-size: 0.9rem;
+    }
+}
