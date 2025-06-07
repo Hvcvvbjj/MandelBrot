@@ -7,6 +7,7 @@ const startAnimationButton = document.getElementById("startAnimation");
 const stopAnimationButton = document.getElementById("stopAnimation");
 const resetButton = document.getElementById("reset");
 const toggleJuliaButton = document.getElementById("toggleJuliaButton");
+const saveButton = document.getElementById("saveButton");
 
 let maxIterations = parseInt(iterationsInput.value);
 let zoom = 1;
@@ -79,6 +80,14 @@ function stopAnimation() {
     }
 }
 
+function saveCanvasAsPNG() {
+    const dataURL = canvas.toDataURL("image/png");
+    const link = document.createElement("a");
+    link.href = dataURL;
+    link.download = "mandelbrot.png";
+    link.click();
+}
+
 // Event listeners
 iterationsInput.addEventListener("input", () => {
     maxIterations = parseInt(iterationsInput.value);
@@ -113,6 +122,7 @@ resetButton.addEventListener("click", () => {
 
 startAnimationButton.addEventListener("click", startAnimation);
 stopAnimationButton.addEventListener("click", stopAnimation);
+saveButton.addEventListener("click", saveCanvasAsPNG);
 
 // Initial draw
 drawMandelbrotWithWorker();
