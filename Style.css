@@ -38,3 +38,46 @@ body {
 .button-group .btn {
     margin-top: 10px;
 }
+
+/* Theme classes for dark/light mode */
+.dark-theme {
+    background-color: #282c34;
+    color: white;
+}
+
+.dark-theme .controls {
+    background-color: #333;
+}
+
+.dark-theme .controls h3 {
+    color: #61dafb;
+}
+
+.dark-theme .form-group label {
+    color: #ddd;
+}
+
+.dark-theme .custom-range {
+    background-color: #444;
+}
+
+.light-theme {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+.light-theme .controls {
+    background-color: #f8f9fa;
+}
+
+.light-theme .controls h3 {
+    color: #000000;
+}
+
+.light-theme .form-group label {
+    color: #000000;
+}
+
+.light-theme .custom-range {
+    background-color: #cccccc;
+}
