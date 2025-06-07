@@ -20,7 +20,8 @@ let juliaMode = false;
 let juliaC = { x: -0.7, y: 0.27015 };
 
 // Initialize Web Worker only once
-let worker = new Worker("mandelbrotWorker.js");
+// After bundling, MandelbrotWorker.js will be placed in the dist folder
+let worker = new Worker("dist/MandelbrotWorker.js");
 
 function drawMandelbrotWithWorker() {
     if (!canvas || !ctx) {
